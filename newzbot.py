@@ -16,7 +16,8 @@ class NewzBot(JabberBot):
 
             if oldlink[itemposition] != newlink:
                 newnews =  new['entries'][0]['title'] + ' ' + new['entries'][0]['link']
-                self.send('marvin@xsteadfastx.org', newnews)
+                for contact in self.roster.getRawRoster():
+                    self.send(contact, newnews)
                 oldlink[itemposition] = newlink
 
         time.sleep(60)
