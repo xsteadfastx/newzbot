@@ -1,5 +1,6 @@
 #/usr/bin/env python
 
+import sys
 import feedparser
 import time
 
@@ -20,7 +21,7 @@ class NewzBot(JabberBot):
                     self.send(contact, newnews)
                 oldlink[itemposition] = newlink
 
-        time.sleep(60)
+        time.sleep(300)
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
@@ -30,8 +31,10 @@ if __name__ == '__main__':
 
     feedlist = ['http://www.heise.de/newsticker/heise-atom.xml',
 'http://blog.fefe.de/rss.xml',
-'http://www.sueddeutsche.de/app/service/rss/alles/rss.xml',
-'http://www.spiegel.de/schlagzeilen/index.rss']
+'http://rss.sueddeutsche.de/rss/Eilmeldungen',
+'http://www.spiegel.de/schlagzeilen/eilmeldungen/index.rss',
+'http://rss.golem.de/rss.php?tp=sec&feed=ATOM1.0']
+
     oldlink = []
     for i in feedlist:
         oldfeed = feedparser.parse(i)
