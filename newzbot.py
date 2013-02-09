@@ -3,25 +3,27 @@
 import sys
 import feedparser
 import time
+import threading
 
 from jabberbot import *
 
 class NewzBot(JabberBot):
 
-    def idle_proc(self):
-        for i in feedlist:
-            itemposition = feedlist.index(i)
+    def thread_proc(self):
+        while True:
+            for i in feedlist:
+                itemposition = feedlist.index(i)
 
-            new = feedparser.parse(i)
-            newlink = new['entries'][0]['link']
+                new = feedparser.parse(i)
+                newlink = new['entries'][0]['link']
 
-            if oldlink[itemposition] != newlink:
-                newnews =  new['entries'][0]['title'] + ' ' + new['entries'][0]['link']
-                for contact in self.roster.getRawRoster():
-                    self.send(contact, newnews)
-                oldlink[itemposition] = newlink
+                if oldlink[itemposition] != newlink:
+                    newnews =  new['entries'][0]['title'] + ' ' + new['entries'][0]['link']
+                    for contact in self.roster.getRawRoster():
+                        self.send(contact, newnews)
+                    oldlink[itemposition] = newlink
 
-        time.sleep(300)
+            time.sleep(60)
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
@@ -30,10 +32,7 @@ if __name__ == '__main__':
         """ % sys.argv[0]
 
     feedlist = ['http://www.heise.de/newsticker/heise-atom.xml',
-'http://blog.fefe.de/rss.xml',
-'http://rss.sueddeutsche.de/rss/Eilmeldungen',
-'http://www.spiegel.de/schlagzeilen/eilmeldungen/index.rss',
-'http://rss.golem.de/rss.php?tp=sec&feed=ATOM1.0']
+'http://blog.fefe.de/rss.xml', 'http://rss.bild.de/bild.xml']
 
     oldlink = []
     for i in feedlist:
@@ -42,6 +41,7 @@ if __name__ == '__main__':
         oldlink.append(olditem)
 
     username, password = sys.argv[1:]
-    newz_bot = NewzBot(username, password, debug=True)
-    newz_bot.serve_forever()
+    newz_bot = NewzBot(username, password)
+    th = threading.Thread(target = newz_bot.thread_proc)
+    newz_bot.serve_forever(th.start())
 
