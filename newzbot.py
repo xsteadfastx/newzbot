@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     timecounter = 1
 
-    feedlist = ['http://www.heise.de/newsticker/heise-atom.xml', 'http://blog.fefe.de/rss.xml', 'http://rss.bild.de/bild.xml']
+    feedlist = [line.strip() for line in open('./feeds.txt', 'r')] 
 
     oldlink = []
     for i in feedlist:
