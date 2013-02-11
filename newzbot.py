@@ -8,9 +8,10 @@ import threading
 from jabberbot import *
 
 class NewzBot(JabberBot):
-
-    def thread_proc(self):
-        while True:
+    def idle_proc(self):
+        global timecounter
+        if timecounter == 300:
+            timecounter = 1
             for i in feedlist:
                 itemposition = feedlist.index(i)
 
@@ -22,8 +23,8 @@ class NewzBot(JabberBot):
                     for contact in self.roster.getRawRoster():
                         self.send(contact, newnews)
                     oldlink[itemposition] = newlink
-
-            time.sleep(60)
+        else:
+            timecounter = timecounter + 1
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
@@ -31,8 +32,9 @@ if __name__ == '__main__':
         Usage: %s <jid> <password>
         """ % sys.argv[0]
 
-    feedlist = ['http://www.heise.de/newsticker/heise-atom.xml',
-'http://blog.fefe.de/rss.xml', 'http://rss.bild.de/bild.xml']
+    timecounter = 1
+
+    feedlist = ['http://www.heise.de/newsticker/heise-atom.xml', 'http://blog.fefe.de/rss.xml', 'http://rss.bild.de/bild.xml']
 
     oldlink = []
     for i in feedlist:
@@ -42,6 +44,5 @@ if __name__ == '__main__':
 
     username, password = sys.argv[1:]
     newz_bot = NewzBot(username, password)
-    th = threading.Thread(target = newz_bot.thread_proc)
-    newz_bot.serve_forever(th.start())
+    newz_bot.serve_forever()
 
