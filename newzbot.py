@@ -3,7 +3,6 @@
 import sys
 import feedparser
 import time
-import threading
 
 from jabberbot import *
 
@@ -43,6 +42,6 @@ if __name__ == '__main__':
         oldlink.append(olditem)
 
     username, password = sys.argv[1:]
-    newz_bot = NewzBot(username, password)
+    newz_bot = NewzBot(username, password, debug=True)
     newz_bot.serve_forever()
 
