@@ -7,7 +7,11 @@ import time
 from jabberbot import *
 
 class NewzBot(JabberBot):
+    PING_FREQUENCY = 60
+    PING_TIMEOUT = 10
+
     def idle_proc(self):
+        self._idle_ping()
         global timecounter
         if timecounter == 300:
             timecounter = 1

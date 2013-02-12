@@ -1,6 +1,5 @@
 http://www.heise.de/newsticker/heise-atom.xml
 http://blog.fefe.de/rss.xml
-http://rss.bild.de/bild.xml
-http://rss.golem.de/rss.php?tp=sec&feed=RSS2.0
 http://www.heise.de/tp/news-atom.xml
 http://www.spiegel.de/schlagzeilen/eilmeldungen/index.rss
+http://rss.sueddeutsche.de/rss/Eilmeldungen
