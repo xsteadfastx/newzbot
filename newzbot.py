@@ -30,7 +30,7 @@ class NewzBot(JabberBot):
             else:
                 timecounter = timecounter + 1
         except Exception:
-            timecounter = timecounter + 1
+            timecounter = 1
             pass
 
 if __name__ == '__main__':
