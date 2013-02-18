@@ -13,10 +13,10 @@ class NewzBot(JabberBot):
     def idle_proc(self):
         self._idle_ping()
         global timecounter
-        try:
-            if timecounter == 300:
-                timecounter = 1
-                for i in feedlist:
+        if timecounter == 300:
+            timecounter = 1
+            for i in feedlist:
+                try:
                     itemposition = feedlist.index(i)
 
                     new = feedparser.parse(i)
@@ -27,11 +27,10 @@ class NewzBot(JabberBot):
                         for contact in self.roster.getRawRoster():
                             self.send(contact, newnews)
                         oldlink[itemposition] = newlink
-            else:
-                timecounter = timecounter + 1
-        except Exception:
-            timecounter = 1
-            pass
+                except Exception:
+                    pass
+        else:
+            timecounter = timecounter + 1
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
@@ -41,16 +40,17 @@ if __name__ == '__main__':
 
     timecounter = 1
 
-    feedlist = [line.strip() for line in open('./feeds.txt', 'r')] 
+    feedlist = [line.strip() for line in open('./feeds.txt', 'r')]
 
     oldlink = []
-    try:
-        for i in feedlist:
+    for i in feedlist:
+        try:
             oldfeed = feedparser.parse(i)
             olditem = oldfeed['entries'][0]['link']
             oldlink.append(olditem)
-    except Exception:
-        pass
+        except Exception:
+            oldlink.append('http://google.com')
+            pass
 
     username, password = sys.argv[1:]
     newz_bot = NewzBot(username, password, debug=True)
