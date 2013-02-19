@@ -13,3 +13,5 @@ Usage
 -----
 1. Edit feeds.txt and add the feeds you want to use. One feed-url per line
 2. Start the bot with `python newzbot.py username password`
+3. add the bot-user to your roster
+4. enjoy :)
