@@ -34,7 +34,7 @@ class NewzBot(JabberBot):
 
     def on_ping_timeout(self):
         time.sleep(300)
-        self.server_forever()
+        self.serve_forever()
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
