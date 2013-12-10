@@ -3,18 +3,21 @@
 import sys
 import feedparser
 import time
-
 from jabberbot import *
+
 
 class NewzBot(JabberBot):
     PING_FREQUENCY = 60
     PING_TIMEOUT = 10
 
+    def __init__(self, username, password, debug=True):
+        self._timecounter = 1
+        super(NewzBot, self).__init__(username, password, debug=True)
+
     def idle_proc(self):
         self._idle_ping()
-        global timecounter
-        if timecounter == 300:
-            timecounter = 1
+        if self._timecounter == 300:
+            self._timecounter = 1
             for i in feedlist:
                 try:
                     itemposition = feedlist.index(i)
@@ -30,15 +33,13 @@ class NewzBot(JabberBot):
                 except Exception:
                     pass
         else:
-            timecounter = timecounter + 1
+            self._timecounter = self._timecounter + 1
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
         print >>sys.stderr, """
         Usage: %s <jid> <password>
         """ % sys.argv[0]
-
-    timecounter = 1
 
     feedlist = [line.strip() for line in open('./feeds.txt', 'r')]
 
