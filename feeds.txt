@@ -1,9 +1,0 @@
-http://www.heise.de/netze/rss/netze-atom.xml
-http://www.heise.de/open/news/news-atom.xml
-http://www.heise.de/security/news/news-atom.xml
-http://blog.fefe.de/rss.xml
-http://www.spiegel.de/schlagzeilen/eilmeldungen/index.rss
-http://rss.sueddeutsche.de/rss/Eilmeldungen
-http://feeds.arstechnica.com/arstechnica/open-source
-http://rss.slashdot.org/Slashdot/slashdotLinux
-https://www.taz.de/Netz/!p5;atom/
