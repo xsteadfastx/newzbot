@@ -55,14 +55,12 @@ class NewzBot(JabberBot):
 
     def idle_proc(self):
         self._idle_ping()
-        print self._timecounter
-        if self._timecounter == 30:
+        if self._timecounter == 300:
             self._timecounter = 1
             for feed in self.my_feeds:
                 message = feed.send_new_item()
                 if message is not None:
                     for contact in self.roster.getRawRoster():
-                        print contact
                         self.send(contact, message)
         else:
             self._timecounter = self._timecounter + 1
