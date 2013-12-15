@@ -2,7 +2,6 @@
 
 import sys
 import feedparser
-import time
 from jabberbot import *
 
 
@@ -57,11 +56,14 @@ class NewzBot(JabberBot):
         self._idle_ping()
         if self._timecounter == 300:
             self._timecounter = 1
-            for feed in self.my_feeds:
-                message = feed.send_new_item()
-                if message is not None:
-                    for contact in self.roster.getRawRoster():
-                        self.send(contact, message)
+            try:
+                for feed in self.my_feeds:
+                    message = feed.send_new_item()
+                    if message is not None:
+                        for contact in self.roster.getRawRoster():
+                            self.send(contact, message)
+            except Exception:
+                pass
         else:
             self._timecounter = self._timecounter + 1
 
